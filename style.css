@@ -2,6 +2,7 @@ html,
 body {
    margin: 0;
    padding: 0;
+   background-color: lightcoral;
 }
 
 .row-wrapper {
@@ -18,8 +19,11 @@ body {
 }
 
 .cell {
-    padding: 0px;
-    margin: 0px;
     aspect-ratio: 1/1;
     height: 100%;
+    background-color: white;
+}
+
+.cell.coloured {
+    background-color: black;
 }
