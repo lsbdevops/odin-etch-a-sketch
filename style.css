@@ -41,6 +41,7 @@ button:hover {
     flex-direction: column;
     height: 100%;
     width: 90%;
+    
 }
 
 .row {
@@ -52,6 +53,7 @@ button:hover {
 .cell {
     aspect-ratio: 1/1;
     background-color: white;
+    user-select: none;
 }
 
 .cell.coloured {
