@@ -71,11 +71,24 @@ function createEtchaSketch (height=16, width=16) {
     addCellListeners();
 }
 
+function clearGrid() {
+    // Determine the current grid size (assume square grid).
+    const numberCells = document.querySelectorAll(".cell")
+    const currentGridSize = Math.sqrt(numberCells.length);
+
+    createEtchaSketch(currentGridSize, currentGridSize);
+
+}
+
 // Create a 16x16 grid of div elements ("cells") and add event listeners.
 createEtchaSketch();
 
 // Create event listeners for change grid button.
 const changeGridButton = document.querySelector("#change-grid");
 changeGridButton.addEventListener("click", createResizedEtchaSketch);
+
+const clearGridButton = document.querySelector("#clear-grid");
+clearGridButton.addEventListener("click", clearGrid);
+
 
 

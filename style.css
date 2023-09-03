@@ -17,6 +17,8 @@ body {
 }
 
 .options-wrapper {
+    display: flex;
+    flex-direction: column;
     background-color: grey;
     border: 2px solid;
     padding: 8px;
@@ -30,6 +32,7 @@ h3 {
 button {
     border-radius: 4px;
     border: 0;
+    margin: 5px;
 }
 
 button:hover {
