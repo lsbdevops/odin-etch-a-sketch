@@ -5,6 +5,7 @@ body {
    text-align: center;
    font-family: Arial, Helvetica, sans-serif;
    background-color: lightcoral;
+   overscroll-behavior: none
 }
 
 .page-wrapper{
