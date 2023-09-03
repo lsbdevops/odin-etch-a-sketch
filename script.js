@@ -35,6 +35,12 @@ function changeCell(event)
 {
     // Add coloured class to cell, if the left mouse button is currently clicked.
     if ((event.type === "click") || (event.buttons === 1)) this.classList.add("coloured");
+    
+    if (event.type === "touchmove")
+    {
+        const cell = document.elementFromPoint(event.touches[0].clientX, event.touches[0].clientY)
+        cell.classList.add("coloured");
+    }
 }
 
 function addCellListeners() {
@@ -44,6 +50,7 @@ function addCellListeners() {
     cells.forEach((cell) => {
         cell.addEventListener("mouseover", changeCell);
         cell.addEventListener("click", changeCell);
+        cell.addEventListener("touchmove", changeCell);
     })
 }
 

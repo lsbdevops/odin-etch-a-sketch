@@ -10,16 +10,16 @@ body {
 .page-wrapper{
     display: flex;
     align-items: center;
-    height: 95vh;
-    width: 100vw;
-    margin-top: 2.5vh;
+    justify-content: space-around;
+    flex-wrap: wrap-reverse;
+    margin-top: 5vh;
 }
 
 .options-wrapper {
     background-color: grey;
     border: 2px solid;
     padding: 8px;
-    margin-left: 10px;
+    margin: 20px;
 }
 
 h3 {
@@ -37,23 +37,20 @@ button:hover {
 }
 
 .row-wrapper {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    width: 90%;
-    
+    max-width: 800px;
+    flex: 1 0 100%;
 }
 
 .row {
     display: flex;
-    justify-content: center;
-    height: 100%;
 }
 
 .cell {
     aspect-ratio: 1/1;
     background-color: white;
     user-select: none;
+    max-width: 500px;
+    flex: 0 1 100%;
 }
 
 .cell.coloured {
