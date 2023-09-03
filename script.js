@@ -54,21 +54,28 @@ function addCellListeners() {
     })
 }
 
-// Create a 16x16 grid of div elements ("cells") and add event listeners.
-createGrid(16, 16);
-addCellListeners()
-
-const changeGridButton = document.querySelector("#change-grid");
-
-changeGridButton.addEventListener("click", (event) => {
+function createResizedEtchaSketch(event) {
     // Prompt user for new grid size- accept only a number between 1-100.
     let gridSize = +(prompt("Enter new grid size (1 - 100):"));
     if((!gridSize) || (gridSize < 1) || (gridSize > 100)) return;
 
-    // Delete the current grid, create a new grid and add event listeners.
-    deleteGrid();
-    createGrid(gridSize, gridSize);
+    createEtchaSketch(gridSize, gridSize);
+}
+
+function createEtchaSketch (height=16, width=16) {
+    // Check if a grid already exists and if so delete it.
+    if (document.querySelector(".cell")) deleteGrid();
+
+    // Create a new grid and add event listeners.
+    createGrid(height, width);
     addCellListeners();
-} )
+}
+
+// Create a 16x16 grid of div elements ("cells") and add event listeners.
+createEtchaSketch();
+
+// Create event listeners for change grid button.
+const changeGridButton = document.querySelector("#change-grid");
+changeGridButton.addEventListener("click", createResizedEtchaSketch);
 
 
