@@ -31,16 +31,26 @@ function deleteGrid() {
     document.querySelector(".page-wrapper").appendChild(containerElement);
 }
 
-function changeCell(event)
-{
-    // Add coloured class to cell, if the left mouse button is currently clicked.
-    if ((event.type === "click") || (event.buttons === 1)) this.classList.add("coloured");
-    
+function changeCell(event, colourMode)
+{   
+    // Get the current cell on the grid which is being targetted.
+    let cell = null;
+
+    // Check if the left mouse button is currently clicked.
+    if ((event.type === "click") || (event.buttons === 1)) 
+    {
+        cell = event.target;
+    }
+    // Check if the finger is being held on the screen (mobile only).   
     if (event.type === "touchmove")
     {
-        const cell = document.elementFromPoint(event.touches[0].clientX, event.touches[0].clientY)
-        cell.classList.add("coloured");
+        cell = document.elementFromPoint(event.touches[0].clientX, event.touches[0].clientY)
     }
+    if (cell === null) return;
+
+    // Add colour to the cell based on the current colour mode.
+    if(colourMode === "black") cell.classList.add("coloured");
+    else cell.style.backgroundColor = `rgb(${randomColourNumber()}, ${randomColourNumber()}, ${randomColourNumber()}`;
 }
 
 function addCellListeners() {
@@ -48,9 +58,9 @@ function addCellListeners() {
     const cells = document.querySelectorAll(".cell");
 
     cells.forEach((cell) => {
-        cell.addEventListener("mouseover", changeCell);
-        cell.addEventListener("click", changeCell);
-        cell.addEventListener("touchmove", changeCell);
+        cell.addEventListener("mouseover", (event) => changeCell(event, colourMode));
+        cell.addEventListener("click", (event) => changeCell(event, colourMode));
+        cell.addEventListener("touchmove", (event) => changeCell(event, colourMode));
     })
 }
 
@@ -77,10 +87,16 @@ function clearGrid() {
     const currentGridSize = Math.sqrt(numberCells.length);
 
     createEtchaSketch(currentGridSize, currentGridSize);
+}
 
+function randomColourNumber() {
+    // Get a random number between 0-255.
+    return Math.floor((Math.random() * 255))
 }
 
 // Create a 16x16 grid of div elements ("cells") and add event listeners.
+// Set colourMode to black (default).
+let colourMode = "black";
 createEtchaSketch();
 
 // Create event listeners for change grid button.
@@ -89,6 +105,15 @@ changeGridButton.addEventListener("click", createResizedEtchaSketch);
 
 const clearGridButton = document.querySelector("#clear-grid");
 clearGridButton.addEventListener("click", clearGrid);
+
+const changeColourButton = document.querySelector("#change-colour-mode");
+changeColourButton.addEventListener("click", () => {
+    // Change the colour mode between black and rainbow.
+    colourMode = (colourMode === "black") ? "rainbow" : "black";
+
+    // Update webpage with colour mode.
+    document.querySelector("#colour-mode").textContent = colourMode;
+});
 
 
 
