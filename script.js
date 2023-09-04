@@ -45,8 +45,9 @@ function changeCell(event, colourMode)
     if (event.type === "touchmove")
     {
         cell = document.elementFromPoint(event.touches[0].clientX, event.touches[0].clientY)
+        console.log(cell);
     }
-    if (cell === null) return;
+    if ((cell === null) || (!cell.classList.contains("cell"))) return;
 
     // Add colour to the cell based on the current colour mode.
     if(colourMode === "black") cell.classList.add("coloured");
