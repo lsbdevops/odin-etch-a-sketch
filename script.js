@@ -49,10 +49,10 @@ function changeCell(event, colourMode)
     // Ensure cell contains an element which includes the class 'cell'.
     if ((cell === null) || (!cell.classList.contains("cell"))) return;
 
-    // Add colour to the cell based on the current colour mode and if easer mode is active.
+    // Add colour to the cell based on the current colour mode and if eraser mode is active.
     if (eraserMode === "off") {
-        if (colourMode === "black") cell.classList.add("coloured");
-        else cell.style.backgroundColor = `rgb(${randomColourNumber()}, ${randomColourNumber()}, ${randomColourNumber()}`;
+        cell.style.backgroundColor = (colourMode === "black") ? "black" :
+        `rgb(${randomColourNumber()}, ${randomColourNumber()}, ${randomColourNumber()}`;
     }
     else cell.style.backgroundColor = "white";
 }
