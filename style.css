@@ -20,12 +20,17 @@ body {
     display: flex;
     flex-direction: column;
     background-color: grey;
+    width: 160px;
     border: 2px solid;
     padding: 8px;
     margin: 20px;
 }
 
 h3 {
+    margin: 4px;
+}
+
+p {
     margin: 4px;
 }
 

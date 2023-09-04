@@ -45,13 +45,16 @@ function changeCell(event, colourMode)
     if (event.type === "touchmove")
     {
         cell = document.elementFromPoint(event.touches[0].clientX, event.touches[0].clientY)
-        console.log(cell);
     }
+    // Ensure cell contains an element which includes the class 'cell'.
     if ((cell === null) || (!cell.classList.contains("cell"))) return;
 
-    // Add colour to the cell based on the current colour mode.
-    if(colourMode === "black") cell.classList.add("coloured");
-    else cell.style.backgroundColor = `rgb(${randomColourNumber()}, ${randomColourNumber()}, ${randomColourNumber()}`;
+    // Add colour to the cell based on the current colour mode and if easer mode is active.
+    if (eraserMode === "off") {
+        if (colourMode === "black") cell.classList.add("coloured");
+        else cell.style.backgroundColor = `rgb(${randomColourNumber()}, ${randomColourNumber()}, ${randomColourNumber()}`;
+    }
+    else cell.style.backgroundColor = "white";
 }
 
 function addCellListeners() {
@@ -95,9 +98,9 @@ function randomColourNumber() {
     return Math.floor((Math.random() * 255))
 }
 
+let colourMode = "black"; // Set initial colourMode to black (default).
+let eraserMode = "off"; // Set initial eraserMode to off (default).
 // Create a 16x16 grid of div elements ("cells") and add event listeners.
-// Set colourMode to black (default).
-let colourMode = "black";
 createEtchaSketch();
 
 // Create event listeners for change grid button.
@@ -114,6 +117,15 @@ changeColourButton.addEventListener("click", () => {
 
     // Update webpage with colour mode.
     document.querySelector("#colour-mode").textContent = colourMode;
+});
+
+const changeEraserButton = document.querySelector("#change-eraser-mode");
+changeEraserButton.addEventListener("click", () => {
+    // Change the colour mode between black and rainbow.
+    eraserMode = (eraserMode === "on") ? "off" : "on";
+
+    // Update webpage with colour mode.
+    document.querySelector("#eraser-mode").textContent = eraserMode;
 });
 
 
