@@ -5,10 +5,10 @@ body {
    text-align: center;
    font-family: Arial, Helvetica, sans-serif;
    background-color: lightcoral;
-   overscroll-behavior: none
+   overscroll-behavior: none;
 }
 
-.page-wrapper{
+.content-wrapper{
     display: flex;
     align-items: center;
     justify-content: center;
@@ -41,14 +41,24 @@ button {
     padding: 4px;
 }
 
+button.toggle {
+    background-color: red;
+}
+
+button.toggle.on {
+    background-color: green;
+}
+
 button:hover {
-    background-color: lightcyan;
+    background-color: lightgrey;
     cursor: pointer;
 }
 
 .row-wrapper {
     max-width: 800px;
-    flex: 1 0 100%;
+    flex: 1 0 calc(100% - 6px);
+    border: 3px solid;
+    background-color: white;
 }
 
 .row {

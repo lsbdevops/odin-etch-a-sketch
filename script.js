@@ -49,13 +49,44 @@ function changeCell(event, colourMode)
     // Ensure cell contains an element which includes the class 'cell'.
     if ((cell === null) || (!cell.classList.contains("cell"))) return;
 
-    // Add colour to the cell based on the current colour mode and if eraser mode is active.
-    if (eraserMode === "off") {
-        cell.style.backgroundColor = (colourMode === "black") ? "black" :
+    // Add colour to the cell based on the current colour mode, if eraser mode or opacity mode is active.
+    if (eraserMode) cell.removeAttribute("background-color"); // Remove any inline colouring (default back to white cell).
+    else if (opacityMode) {
+        // Store colour of current cell.
+        let cellColour = cell.style.backgroundColor;
+
+        // If the cell is currently not coloured, colour with an opacity of 10%.
+        if (cellColour === "") {
+            cell.style.backgroundColor = (colourMode === "black") ? "rgba(0, 0, 0, 0.1)" :
+            `rgba(${randomColourNumber()}, ${randomColourNumber()}, ${randomColourNumber()}, 0.1`;
+        }
+        // Check if the cell colour is in rgba format, otherwise the cell is already 100% coloured and can be ignored.
+        if (!(cellColour[3] === "a")) return;
+        // Else colour the cell with the required opacity.
+        else {
+            // Get the current cell opacity by splitting the rgba value with a comma delimiter. Removing trailing bracket and convert to a number.
+            const cellColourComponents = cellColour.split(",");
+            let opacity = +cellColourComponents[3].replace(")", "");
+
+            // Add 10% opacity, and convert back to string format with trailing bracket.
+            opacity += 0.1;
+            opacity = opacity + ")"
+
+            // Update the rgba opacity component and join the components.
+            cellColourComponents[3] = opacity;
+            cellColourComponents.join(",");
+
+            // Update the cell's colour.
+            cell.style.backgroundColor = cellColourComponents;
+        }
+    }
+    // If no options are active, colour the cell with full opacity.
+    else {
+        cell.style.backgroundColor = (colourMode === "black") ? "rgb(0, 0, 0)" :
         `rgb(${randomColourNumber()}, ${randomColourNumber()}, ${randomColourNumber()}`;
     }
-    else cell.style.backgroundColor = "white";
 }
+
 
 function addCellListeners() {
     // Add mouseover and click event listener to all cells. Run function to change class of cell if triggered.
@@ -98,8 +129,9 @@ function randomColourNumber() {
     return Math.floor((Math.random() * 255))
 }
 
-let colourMode = "black"; // Set initial colourMode to black (default).
-let eraserMode = "off"; // Set initial eraserMode to off (default).
+let colourMode = "black"; // Set initial colourMode value to black (default).
+let eraserMode = false; // Set initial eraserMode value to false/off (default).
+let opacityMode = false; // Set initial opacityMode value to false/off (default).
 // Create a 16x16 grid of div elements ("cells") and add event listeners.
 createEtchaSketch();
 
@@ -120,12 +152,21 @@ changeColourButton.addEventListener("click", () => {
 });
 
 const changeEraserButton = document.querySelector("#change-eraser-mode");
-changeEraserButton.addEventListener("click", () => {
-    // Change the colour mode between black and rainbow.
-    eraserMode = (eraserMode === "on") ? "off" : "on";
+changeEraserButton.addEventListener("click", (event) => {
+    // Toggle the eraser mode variable.
+    eraserMode = (eraserMode === true) ? false : true;
 
-    // Update webpage with colour mode.
-    document.querySelector("#eraser-mode").textContent = eraserMode;
+    // Update the eraser mode button color.
+    event.target.classList.toggle("on");
+});
+
+const changeOpacityButton = document.querySelector("#change-opacity-mode");
+changeOpacityButton.addEventListener("click", (event) => {
+    // Toggle the opacity mode variable.
+    opacityMode = (opacityMode === true) ? false : true;
+
+    // Update the eraser mode button color.
+    event.target.classList.toggle("on");
 });
 
 
