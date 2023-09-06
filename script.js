@@ -18,7 +18,11 @@ function createGrid(height, width) {
             rowElement.appendChild(divElement);
         }
     }
+
+    // Add cell styling for grid mode.
+    if (gridMode) changeGridMode();
 }
+
 
 function deleteGrid() {
     // Delete row-wrapper.
@@ -30,6 +34,7 @@ function deleteGrid() {
 
     document.querySelector(".content-wrapper").appendChild(containerElement);
 }
+
 
 function changeCell(event, colourMode)
 {   
@@ -51,7 +56,7 @@ function changeCell(event, colourMode)
 
     // Add colour to the cell based on the current colour mode, if eraser mode or opacity mode is active.
     if (eraserMode) {
-        cell.removeAttribute("style"); // Remove any inline colouring (default back to white cell).
+        cell.style.backgroundColor = ""; // Remove any inline colouring (default back to white cell).
     }
     else if (opacityMode) {
         // Store colour of current cell.
@@ -131,9 +136,27 @@ function randomColourNumber() {
     return Math.floor((Math.random() * 255))
 }
 
+function changeGridMode() {
+    // Get the node list of all cells in the grid.
+    const cells = document.querySelectorAll(".cell");
+
+    // Convert node list to an array.
+    cellsArray = Array.from(cells);
+
+    if (gridMode) {
+        // Give each cell a border.
+        cellsArray.forEach((cell) => cell.style.border = "1px solid lightgrey");
+    }
+    else {
+        // Remove border.
+        cellsArray.forEach((cell) => cell.style.border = ""); 
+    }
+}
+
 let colourMode = "black"; // Set initial colourMode value to black (default).
 let eraserMode = false; // Set initial eraserMode value to false/off (default).
 let opacityMode = false; // Set initial opacityMode value to false/off (default).
+let gridMode = false; // Set initial opacityMode value to false/off (default).
 // Create a 16x16 grid of div elements ("cells") and add event listeners.
 createEtchaSketch();
 
@@ -167,7 +190,19 @@ changeOpacityButton.addEventListener("click", (event) => {
     // Toggle the opacity mode variable.
     opacityMode = (opacityMode === true) ? false : true;
 
-    // Update the eraser mode button color.
+    // Update the opacity mode button color.
+    event.target.classList.toggle("on");
+});
+
+const changeGridModeButton = document.querySelector("#change-grid-mode");
+changeGridModeButton.addEventListener("click", (event) => {
+    // Toggle the opacity mode variable.
+    gridMode = (gridMode === true) ? false : true;
+
+    // Update grid styling.
+    changeGridMode();
+
+    // Update the grid mode button color.
     event.target.classList.toggle("on");
 });
 
