@@ -49,9 +49,11 @@ button.toggle.on {
     background-color: green;
 }
 
-button:hover {
-    background-color: lightgrey;
-    cursor: pointer;
+@media (hover: hover) {
+    button:hover {
+        background-color: lightgrey;
+        cursor: pointer;
+    }
 }
 
 .row-wrapper {

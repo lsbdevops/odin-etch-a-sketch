@@ -28,7 +28,7 @@ function deleteGrid() {
     const containerElement = document.createElement("div");
     containerElement.classList.add("row-wrapper");
 
-    document.querySelector(".page-wrapper").appendChild(containerElement);
+    document.querySelector(".content-wrapper").appendChild(containerElement);
 }
 
 function changeCell(event, colourMode)
@@ -50,7 +50,9 @@ function changeCell(event, colourMode)
     if ((cell === null) || (!cell.classList.contains("cell"))) return;
 
     // Add colour to the cell based on the current colour mode, if eraser mode or opacity mode is active.
-    if (eraserMode) cell.removeAttribute("background-color"); // Remove any inline colouring (default back to white cell).
+    if (eraserMode) {
+        cell.removeAttribute("style"); // Remove any inline colouring (default back to white cell).
+    }
     else if (opacityMode) {
         // Store colour of current cell.
         let cellColour = cell.style.backgroundColor;
